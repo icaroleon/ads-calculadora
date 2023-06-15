@@ -1,46 +1,51 @@
-class Professor
-  attr_accessor :nome, :regime_pagamento, :salario_mensal, :numero_horas, :valor_hora, :valor_contrato
+class Teacher
+  attr_accessor :name, :contract_type, :mensal_income, :work_hours, :hour_value, :contract_value
 
-  def initialize(nome, regime_pagamento)
-    @nome = nome
-    @regime_pagamento = regime_pagamento
+  def initialize(name, contract_type)
+    @name = name
+    @contract_type = contract_type
   end
 
   def valor_a_receber
-    case @regime_pagamento
+    case @contract_type
     when 'CLT'
-      @salario_mensal
+      @mensal_income
     when 'Horista'
-      @numero_horas * @valor_hora
+      @work_hours * @hour_value
     when 'PJ'
-      @valor_contrato
+      @contract_value
     else
       'Regime de pagamento inválido.'
     end
   end
 end
 
-puts "Insira o nome do professor:"
-nome = gets.chomp
-puts "Insira o regime de pagamento (CLT, Horista, PJ):"
-regime_pagamento = gets.chomp
+puts "Nome do professor:"
+name = gets.chomp
+puts "Qual o regime de pagamento (CLT, Horista, PJ)?"
+contract_type = gets.chomp
 
-professor = Professor.new(nome, regime_pagamento)
+unless ['CLT', 'Horista', 'PJ'].include?(contract_type)
+  puts "Regime de pagamento inválido. Favor reinserir as informações."
+  return
+end
 
-case regime_pagamento
+teacher = Teacher.new(name, contract_type)
+
+case contract_type
 when 'CLT'
   puts "Insira o salário mensal:"
-  professor.salario_mensal = gets.chomp.to_f
+  teacher.mensal_income = gets.chomp.to_f
 when 'Horista'
   puts "Insira o número de horas trabalhadas:"
-  professor.numero_horas = gets.chomp.to_f
+  teacher.work_hours = gets.chomp.to_f
   puts "Insira o valor da hora de trabalho:"
-  professor.valor_hora = gets.chomp.to_f
+  teacher.hour_value = gets.chomp.to_f
 when 'PJ'
   puts "Insira o valor do contrato:"
-  professor.valor_contrato = gets.chomp.to_f
+  teacher.contract_value = gets.chomp.to_f
 else
   puts "Regime de pagamento inválido."
 end
 
-puts "Conforme o cálculo realizado, o professor #{professor.nome} vai receber #{professor.valor_a_receber}"
+puts "Conforme o cálculo realizado, o teacher #{teacher.name} vai receber #{teacher.valor_a_receber}"
